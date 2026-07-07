@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход · Служба доверия ООО «СУ-10»</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="page page--narrow">
+    <header class="header">
+      <h1 class="header__title header__title--sm">Служба доверия</h1>
+      <p class="header__subtitle">Кабинет сотрудника</p>
+    </header>
+
+    <section class="form-section">
+      <form id="login-form" class="form" novalidate>
+        <label class="form__field">
+          <span class="form__label">Логин</span>
+          <input type="text" name="username" autocomplete="username" required>
+        </label>
+
+        <label class="form__field">
+          <span class="form__label">Пароль</span>
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+
+        <p id="login-message" class="form__message" role="status" aria-live="polite"></p>
+
+        <button type="submit" class="btn btn--primary" id="login-btn">Войти</button>
+      </form>
+    </section>
+
+    <p class="back-link"><a href="/">← На главную</a></p>
+  </div>
+
+  <script src="/js/login.js"></script>
+</body>
+</html>
