@@ -23,9 +23,15 @@ QR-код для распечатки на A4 генерируется на от
    CREATE USER trust WITH PASSWORD 'trustpass';
    CREATE DATABASE trustservice OWNER trust;
    ```
-3. Скопировать `.env.example` в `.env` и заполнить значения:
+3. Скопировать `.env.example` в `.env` и заполнить значения. Для локального
+   Postgres — строка без TLS, `DB_CA_CERT_PATH` оставить пустым; секрет сессии
+   сгенерировать `openssl rand -hex 32`:
    ```bash
    cp .env.example .env
+   # в .env:
+   #   DATABASE_URL=postgres://trust:trustpass@localhost:5432/trustservice
+   #   DB_CA_CERT_PATH=
+   #   SESSION_SECRET=$(openssl rand -hex 32)
    ```
 4. Применить миграцию (создаёт таблицы и первичного сотрудника из `.env`):
    ```bash
@@ -62,6 +68,11 @@ e-mail / телефон.
 
 ## Развёртывание
 
-Целевой вариант: VPS с Node.js + PostgreSQL за Nginx (reverse-proxy) и HTTPS,
-на поддомене вида `trust.su10.ru`. `PUBLIC_URL` должен указывать на публичный
-адрес — от него зависит содержимое QR-кода.
+Пошаговая инструкция — в **[docs/DEPLOY.md](docs/DEPLOY.md)**.
+
+Целевой вариант: VPS с Node.js за Nginx (reverse-proxy) и HTTPS, база —
+**Yandex Managed PostgreSQL** (подключение по TLS, `sslmode=verify-full`; путь к
+корневому сертификату Яндекса — в `DB_CA_CERT_PATH`, см.
+[infra/secrets/README.md](infra/secrets/README.md)). Домен — поддомен вида
+`trust.su10.ru`; `PUBLIC_URL` должен указывать на публичный адрес — от него
+зависит содержимое QR-кода.

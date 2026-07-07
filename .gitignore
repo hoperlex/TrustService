@@ -3,3 +3,10 @@ node_modules/
 npm-debug.log*
 *.log
 .DS_Store
+
+# Секреты и сертификаты внутри infra/secrets/ — в git не попадают.
+# Структуру каталогов держат .gitkeep и README (они отслеживаются).
+infra/secrets/**/*.crt
+infra/secrets/**/*.pem
+infra/secrets/**/*.key
+infra/secrets/**/*.env

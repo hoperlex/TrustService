@@ -58,6 +58,9 @@ app.use((req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Служба доверия слушает http://localhost:${port}`);
+// По умолчанию слушаем только localhost — на проде наружу смотрит Nginx.
+// Для доступа из локальной сети можно задать HOST=0.0.0.0.
+const host = process.env.HOST || '127.0.0.1';
+app.listen(port, host, () => {
+  console.log(`Служба доверия слушает http://${host}:${port}`);
 });
