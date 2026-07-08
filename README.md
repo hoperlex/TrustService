@@ -1,78 +1,30 @@
 # Служба доверия ООО «СУ-10»
 
-Сайт для приёма обращений сотрудников: публичная страница с формой и прямыми
-контактами (Max / Telegram / e-mail / телефон), хранение обращений в PostgreSQL,
-закрытый кабинет сотрудника со списком обращений и сменой статусов.
+Статическая **информационная страница** службы доверия: показывает **телефон доверия**
+и **e-mail**. Сайт ничего не принимает и не хранит — обращения идут напрямую по
+телефону или почте.
 
-QR-код для распечатки на A4 генерируется на отдельной странице `/print`.
+Открывается по QR-коду (печатается на A4), который ведёт на <https://sb.su10.ru>.
 
-## Стек
+## Состав
 
-- Node.js + Express
-- PostgreSQL (через `pg`)
-- Обычный HTML/CSS/JavaScript (без фронтенд-фреймворка)
+- `public/index.html` — страница
+- `public/css/styles.css` — стили
+- `deploy/nginx.sb.su10.ru.conf` — пример vhost nginx
+- `docs/DEPLOY.md` — как развернуть
 
-## Запуск локально
+## Как поменять телефон / почту / текст
 
-1. Установить зависимости:
-   ```bash
-   npm install
-   ```
-2. Поднять PostgreSQL и создать базу/пользователя, например:
-   ```sql
-   CREATE USER trust WITH PASSWORD 'trustpass';
-   CREATE DATABASE trustservice OWNER trust;
-   ```
-3. Скопировать `.env.example` в `.env` и заполнить значения. Для локального
-   Postgres — строка без TLS, `DB_CA_CERT_PATH` оставить пустым; секрет сессии
-   сгенерировать `openssl rand -hex 32`:
-   ```bash
-   cp .env.example .env
-   # в .env:
-   #   DATABASE_URL=postgres://trust:trustpass@localhost:5432/trustservice
-   #   DB_CA_CERT_PATH=
-   #   SESSION_SECRET=$(openssl rand -hex 32)
-   ```
-4. Применить миграцию (создаёт таблицы и первичного сотрудника из `.env`):
-   ```bash
-   npm run migrate
-   ```
-5. Запустить приложение:
-   ```bash
-   npm start
-   ```
-   Публичная страница: <http://localhost:3000>
-   Кабинет сотрудника: <http://localhost:3000/admin>
-   Страница печати QR: <http://localhost:3000/print>
+Всё — в `public/index.html`:
 
-## Маршруты
+- **телефон**: текст в `.contact__value` и атрибут `href="tel:+7..."` (в `href` — без
+  пробелов и скобок, например `tel:+74951234567`);
+- **почта**: текст и `href="mailto:..."`;
+- заголовки и нижняя строка — тоже в `index.html`.
 
-| Маршрут                        | Доступ    | Назначение                         |
-|--------------------------------|-----------|------------------------------------|
-| `GET /`                        | публичный | Страница с формой и контактами     |
-| `POST /api/appeals`            | публичный | Приём обращения (rate-limit)       |
-| `GET /api/config`              | публичный | Контакты для верхнего блока        |
-| `GET /print`                   | публичный | Страница печати QR на A4           |
-| `GET /admin/login`             | публичный | Форма входа сотрудника             |
-| `POST /admin/login`            | публичный | Вход (bcrypt, rate-limit)          |
-| `POST /admin/logout`           | сотрудник | Выход                              |
-| `GET /admin`                   | сотрудник | Список обращений                   |
-| `GET /api/appeals`             | сотрудник | JSON обращений                     |
-| `PATCH /api/appeals/:id/status`| сотрудник | Смена статуса                      |
-
-## Конфигурация
-
-Все параметры — в `.env` (см. `.env.example`): подключение к БД, секрет сессии,
-`PUBLIC_URL` для QR, логин/пароль первичного сотрудника и контакты Max / Telegram /
-e-mail / телефон.
+Менять содержимое можно без перевыпуска QR-кода — он ведёт на `sb.su10.ru`.
 
 ## Развёртывание
 
-Пошаговая инструкция — в **[docs/DEPLOY.md](docs/DEPLOY.md)**.
-
-Целевой вариант: VPS с Node.js за Nginx (reverse-proxy) и HTTPS, база —
-**Yandex Managed PostgreSQL** (подключение по TLS, `sslmode=verify-full`; путь к
-корневому сертификату Яндекса — в `DB_CA_CERT_PATH`, см.
-[infra/secrets/README.md](infra/secrets/README.md)). Домен — поддомен вида
-`trust.su10.ru`; `PUBLIC_URL` должен указывать на публичный адрес — от него
-зависит содержимое QR-кода.
+См. [docs/DEPLOY.md](docs/DEPLOY.md). Коротко: nginx отдаёт `public/` на `sb.su10.ru`
+с HTTPS (Let's Encrypt). Node.js/PostgreSQL не нужны.
