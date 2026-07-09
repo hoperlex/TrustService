@@ -1,48 +1,42 @@
 # Развёртывание страницы «Служба доверия ООО «СУ-10»»
 
-Статическая страница за nginx на VPS, домен `sb.su10.ru`, HTTPS через Let's Encrypt.
-Node.js, PostgreSQL и системные сервисы **не нужны** — nginx отдаёт HTML/CSS напрямую.
+Статическая страница за nginx, домен `sb.su10.ru`, HTTPS через Let's Encrypt.
+Разворачивается под **root**, без отдельного системного пользователя (nginx отдаёт файлы
+сам как `www-data`). Node.js, PostgreSQL и сервисы не нужны.
 
 ## Предпосылки
 
-- VPS (Ubuntu/Debian) с установленными `nginx` и `certbot`.
-- DNS: A-запись `sb.su10.ru` → IP сервера.
+- Сервер (Ubuntu/Debian), вход по SSH под root.
+- DNS: A-запись `sb.su10.ru` → IP сервера (нужна для выпуска сертификата).
 
-## Шаги
+## Команды (под root)
 
-1. **Код** — клонировать репозиторий (веб-корень — `public/`):
+```bash
+# 1. Пакеты
+apt update && apt install -y nginx certbot python3-certbot-nginx git
 
-   ```bash
-   git clone https://github.com/hoperlex/TrustService.git /srv/sb
-   chmod -R a+rX /srv/sb/public          # чтобы nginx (www-data) мог читать
-   ```
+# 2. Код (репозиторий публичный). Веб-корень — public/
+git clone https://github.com/hoperlex/TrustService.git /var/www/sb.su10.ru
 
-   Обновление содержимого потом: `git -C /srv/sb pull`.
+# 3. Nginx vhost (HTTP; HTTPS добавит certbot)
+cp /var/www/sb.su10.ru/deploy/nginx.sb.su10.ru.conf /etc/nginx/sites-available/sb.su10.ru
+ln -sf /etc/nginx/sites-available/sb.su10.ru /etc/nginx/sites-enabled/
+rm -f /etc/nginx/sites-enabled/default        # опционально
+nginx -t && systemctl reload nginx
 
-2. **Nginx vhost**:
-
-   ```bash
-   cp /srv/sb/deploy/nginx.sb.su10.ru.conf /etc/nginx/sites-available/sb.su10.ru
-   ln -s /etc/nginx/sites-available/sb.su10.ru /etc/nginx/sites-enabled/
-   nginx -t && systemctl reload nginx
-   ```
-
-3. **HTTPS** (Let's Encrypt, webroot):
-
-   ```bash
-   mkdir -p /var/www/certbot
-   certbot certonly --webroot -w /var/www/certbot -d sb.su10.ru
-   systemctl reload nginx
-   ```
-
-   Автопродление — штатным `certbot.timer`.
+# 4. HTTPS (нужна работающая DNS-запись)
+certbot --nginx -d sb.su10.ru --agree-tos -m <ваш-email> --redirect
+```
 
 ## Проверка
 
-- `curl -I https://sb.su10.ru/` → `200`.
-- Открыть на телефоне: телефон и почта — крупные, нажимаются (`tel:` / `mailto:`).
+- До DNS: `curl -H 'Host: sb.su10.ru' http://<IP>/` → страница (200).
+- После DNS+HTTPS: `curl -I https://sb.su10.ru/` → `200`; телефон/почта на телефоне
+  крупные и нажимаются (`tel:` / `mailto:`).
 
 ## Обновление содержимого
 
-- Поменять `public/index.html` (телефон, почта, текст) → commit/push → на сервере `git -C /srv/sb pull`.
-- QR-код перевыпускать **не нужно** — он ведёт на `sb.su10.ru`, а меняется только содержимое страницы.
+- Поменять телефон/почту/текст в `public/index.html` → commit/push → на сервере
+  `git -C /var/www/sb.su10.ru pull` (страница подхватится сразу).
+- QR-код перевыпускать **не нужно** — он ведёт на `sb.su10.ru`.
+- Сертификат продлевается автоматически (`certbot.timer`).
