@@ -29,6 +29,7 @@ body {
 }
 
 .card {
+  position: relative;
   width: 100%;
   max-width: 560px;
   border: 3px solid var(--green);
@@ -38,6 +39,10 @@ body {
 }
 
 /* Заголовок */
+.head {
+  padding-top: 48px;
+}
+
 .head__title {
   margin: 0;
   font-size: clamp(28px, 8vw, 44px);
@@ -102,22 +107,22 @@ body {
   font-size: 15px;
 }
 
-.contact--max {
-  gap: 8px;
+.max-link {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
 }
 
-.contact--max[aria-disabled="true"] {
+.max-link[aria-disabled="true"] {
   cursor: default;
 }
 
-.contact--max[aria-disabled="true"]:hover,
-.contact--max[aria-disabled="true"]:focus {
-  background: var(--green-light);
-  color: var(--green-dark);
-}
-
-.contact__icon--max {
-  align-self: center;
+.max-link__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -131,8 +136,9 @@ body {
   letter-spacing: 0;
 }
 
-.contact__value--pending {
-  font-size: clamp(18px, 5vw, 24px);
+.max-link:not([aria-disabled="true"]):hover .max-link__icon,
+.max-link:not([aria-disabled="true"]):focus .max-link__icon {
+  background: #0f7ee8;
 }
 
 .qr {

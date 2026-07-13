@@ -8,6 +8,11 @@
 </head>
 <body>
   <main class="card">
+    <!-- TODO: заменить href на ссылку контакта MAX и убрать aria-disabled/onclick. -->
+    <a class="max-link" href="#" aria-disabled="true" onclick="return false" aria-label="Написать в MAX">
+      <span class="max-link__icon" aria-hidden="true">MAX</span>
+    </a>
+
     <header class="head">
       <h1 class="head__title">СЛУЖБА ДОВЕРИЯ</h1>
       <p class="head__subtitle">ООО «СУ-10»</p>
@@ -24,13 +29,6 @@
       <a class="contact" href="mailto:dover@su10.ru">
         <span class="contact__label">Почта</span>
         <span class="contact__value">dover@su10.ru</span>
-      </a>
-
-      <!-- TODO: заменить href на ссылку контакта MAX и убрать aria-disabled/onclick. -->
-      <a class="contact contact--max" href="#" aria-disabled="true" onclick="return false">
-        <span class="contact__icon contact__icon--max" aria-hidden="true">MAX</span>
-        <span class="contact__label">Мессенджер MAX</span>
-        <span class="contact__value contact__value--pending">Ссылка будет добавлена</span>
       </a>
     </section>
 
