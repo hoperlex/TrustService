@@ -4,13 +4,13 @@
 и **e-mail**. Сайт ничего не принимает и не хранит — обращения идут напрямую по
 телефону или почте.
 
-Открывается по QR-коду (печатается на A4), который ведёт на <https://sb.su10.ru>.
+Открывается по QR-коду (печатается на A4), который ведёт на <https://sd.su10.ru>.
 
 ## Состав
 
 - `public/index.html` — страница
 - `public/css/styles.css` — стили
-- `deploy/nginx.sb.su10.ru.conf` — пример vhost nginx
+- `deploy/nginx.sd.su10.ru.conf` — пример vhost nginx
 - `docs/DEPLOY.md` — как развернуть
 
 ## Как поменять телефон / почту / текст
@@ -22,9 +22,9 @@
 - **почта**: текст и `href="mailto:..."`;
 - заголовки и нижняя строка — тоже в `index.html`.
 
-Менять содержимое можно без перевыпуска QR-кода — он ведёт на `sb.su10.ru`.
+Менять содержимое можно без перевыпуска QR-кода — он ведёт на `sd.su10.ru`.
 
 ## Развёртывание
 
-См. [docs/DEPLOY.md](docs/DEPLOY.md). Коротко: nginx отдаёт `public/` на `sb.su10.ru`
+См. [docs/DEPLOY.md](docs/DEPLOY.md). Коротко: nginx отдаёт `public/` на `sd.su10.ru`
 с HTTPS (Let's Encrypt). Node.js/PostgreSQL не нужны.

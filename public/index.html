@@ -25,6 +25,29 @@
         <span class="contact__label">Почта</span>
         <span class="contact__value">dover@su10.ru</span>
       </a>
+
+      <!-- TODO: заменить href на ссылку контакта MAX и убрать aria-disabled/onclick. -->
+      <a class="contact contact--max" href="#" aria-disabled="true" onclick="return false">
+        <span class="contact__icon contact__icon--max" aria-hidden="true">MAX</span>
+        <span class="contact__label">Мессенджер MAX</span>
+        <span class="contact__value contact__value--pending">Ссылка будет добавлена</span>
+      </a>
+    </section>
+
+    <section class="qr" aria-labelledby="qr-title">
+      <div class="qr__content">
+        <h2 class="qr__title" id="qr-title">QR-код страницы</h2>
+        <p class="qr__text">https://sd.su10.ru/</p>
+      </div>
+      <a class="qr__link" href="https://sd.su10.ru/" aria-label="Открыть https://sd.su10.ru/">
+        <img
+          class="qr__image"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;margin=12&amp;data=https%3A%2F%2Fsd.su10.ru%2F"
+          alt="QR-код для перехода на https://sd.su10.ru/"
+          width="168"
+          height="168"
+        >
+      </a>
     </section>
 
     <p class="note">
