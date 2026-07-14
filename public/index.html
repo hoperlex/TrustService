@@ -8,8 +8,12 @@
 </head>
 <body>
   <main class="card">
-    <!-- TODO: заменить href на ссылку контакта MAX и убрать aria-disabled/onclick. -->
-    <a class="max-link" href="#" aria-disabled="true" onclick="return false" aria-label="Написать в MAX">
+    <a
+      class="max-link"
+      href="https://max.ru/+79151520048"
+      aria-label="Написать в MAX на +7 (915) 152-00-48"
+      title="MAX: +7 (915) 152-00-48"
+    >
       <span class="max-link__icon" aria-hidden="true">MAX</span>
     </a>
 
@@ -20,31 +24,34 @@
 
     <section class="contacts">
       <!-- TODO: заменить на реальный номер (в href — без пробелов и скобок) -->
-      <a class="contact" href="tel:+78000000000">
+      <a class="contact" href="tel:+79151520048">
         <span class="contact__label">Телефон доверия</span>
-        <span class="contact__value">+7 (800) 000-00-00</span>
+        <span class="contact__value">+7 (915) 152-00-48</span>
       </a>
 
       <!-- TODO: заменить на реальный e-mail -->
-      <a class="contact" href="mailto:dover@su10.ru">
+      <a class="contact" href="mailto:doverie@su10.ru">
         <span class="contact__label">Почта</span>
-        <span class="contact__value">dover@su10.ru</span>
+        <span class="contact__value">doverie@su10.ru</span>
       </a>
     </section>
 
     <section class="qr" aria-labelledby="qr-title">
-      <div class="qr__content">
-        <h2 class="qr__title" id="qr-title">QR-код страницы</h2>
-        <p class="qr__text">https://sd.su10.ru/</p>
-      </div>
+      <h2 class="qr__title" id="qr-title">QR-код страницы</h2>
       <a class="qr__link" href="https://sd.su10.ru/" aria-label="Открыть https://sd.su10.ru/">
-        <img
-          class="qr__image"
-          src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&amp;margin=12&amp;data=https%3A%2F%2Fsd.su10.ru%2F"
-          alt="QR-код для перехода на https://sd.su10.ru/"
-          width="168"
-          height="168"
-        >
+        <span class="qr__code">
+          <img
+            class="qr__image"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=420x420&amp;margin=0&amp;qzone=3&amp;ecc=H&amp;data=https%3A%2F%2Fsd.su10.ru%2F"
+            alt="QR-код для перехода на https://sd.su10.ru/"
+            width="260"
+            height="260"
+          >
+          <span class="qr__badge" aria-hidden="true">
+            <span class="qr__brand">СУ_10</span>
+            <span class="qr__caption">ГЕНЕРАЛЬНЫЙ ПОДРЯДЧИК</span>
+          </span>
+        </span>
       </a>
     </section>
 

@@ -118,10 +118,6 @@ body {
   text-decoration: none;
 }
 
-.max-link[aria-disabled="true"] {
-  cursor: default;
-}
-
 .max-link__icon {
   display: inline-flex;
   align-items: center;
@@ -136,58 +132,92 @@ body {
   letter-spacing: 0;
 }
 
-.max-link:not([aria-disabled="true"]):hover .max-link__icon,
-.max-link:not([aria-disabled="true"]):focus .max-link__icon {
+.max-link:hover .max-link__icon,
+.max-link:focus .max-link__icon {
   background: #0f7ee8;
 }
 
 .qr {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 12px;
   margin: 6px 0 22px;
   padding-top: 22px;
   border-top: 1px solid rgba(79, 143, 47, 0.32);
-  text-align: left;
+  text-align: center;
 }
 
 .qr__title {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--green-dark);
   font-size: 18px;
 }
 
-.qr__text {
-  margin: 0;
-  color: var(--muted);
-  font-size: 16px;
-  word-break: break-word;
-}
-
 .qr__link {
   display: inline-flex;
-  justify-self: center;
+  justify-content: center;
+  color: inherit;
+  text-decoration: none;
 }
 
-.qr__image {
+.qr__code {
+  position: relative;
   display: block;
-  width: 168px;
-  height: 168px;
+  width: min(100%, 260px);
+  aspect-ratio: 1;
   padding: 8px;
   border: 1px solid rgba(79, 143, 47, 0.28);
   border-radius: 8px;
   background: #fff;
 }
 
+.qr__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.qr__badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66%;
+  min-height: 64px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 6px #fff;
+  transform: translate(-50%, -50%);
+}
+
+.qr__brand {
+  color: #9a4f46;
+  font-size: clamp(24px, 7vw, 34px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.qr__caption {
+  margin-top: 5px;
+  color: #9a6a63;
+  font-size: clamp(8px, 2vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
 @media (max-width: 560px) {
-  .qr {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .qr__code {
+    width: min(100%, 236px);
   }
 
-  .qr__image {
-    width: 184px;
-    height: 184px;
+  .qr__badge {
+    width: 70%;
   }
 }
