@@ -107,34 +107,35 @@ body {
   font-size: 15px;
 }
 
-.max-link {
+/* Иконки мессенджеров в правом верхнем углу карточки */
+.apps {
   position: absolute;
   top: 16px;
   right: 16px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-decoration: none;
+  gap: 10px;
 }
 
-.max-link__icon {
+.app-link {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 12px;
-  background: #1f8fff;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: opacity 0.15s;
 }
 
-.max-link:hover .max-link__icon,
-.max-link:focus .max-link__icon {
-  background: #0f7ee8;
+.app-link:hover,
+.app-link:focus-visible {
+  opacity: 0.8;
+}
+
+/* Общий класс для обеих иконок — размер задаётся здесь и только здесь */
+.app-link__icon {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
 .qr {
